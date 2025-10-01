@@ -1,0 +1,63 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Register — BlogFeed</title><link href='style.css' rel='stylesheet'></head><body class='min-h-screen bg-gray-50 dark:bg-gray-900 dark:text-gray-100'>
+<header class="bg-white dark:bg-gray-900/80 shadow-sm sticky top-0 z-40">
+  <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-4">
+      <a href="index.html" class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">BlogFeed</a>
+    </div>
+    <div class="flex-1 px-4">
+      <form action="search.html" method="get" class="max-w-xl mx-auto">
+        <label class="relative block">
+          <input name="q" placeholder="Search posts, authors, tags..." class="w-full rounded-full border px-4 py-2 pr-10 bg-gray-50 dark:bg-gray-800 focus:outline-none"/>
+          <button type="submit" class="absolute right-1 top-1/2 -translate-y-1/2 px-3 py-1 rounded-full bg-indigo-600 text-white">Search</button>
+        </label>
+      </form>
+    </div>
+    <div class="flex items-center gap-3">
+      <button id="theme-toggle" onclick="toggleTheme(document.getElementById('theme-toggle'))" class="px-3 py-1 rounded text-sm bg-gray-100 dark:bg-gray-800">Toggle</button>
+      <div class="relative">
+        <button id="avatar-toggle" class="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center font-semibold">RD</button>
+        <div id="avatar-menu" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded shadow-lg py-2 text-sm">
+          <a href="profile.html" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Profile</a>
+          <a href="dashboard.html" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Dashboard</a>
+          <a href="favorites.html" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Favorites</a>
+          <a href="admin.html" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Admin</a>
+          <div class="border-t my-1"></div>
+          <a href="login.html" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Login</a>
+          <a href="register.html" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Register</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<main class='flex items-center justify-center py-20 px-6'><div class='w-full max-w-md bg-white dark:bg-gray-800 p-6 rounded-lg shadow'><h1 class='text-2xl font-bold mb-4'>Create account</h1><form class='space-y-4' method='post' action='/Account/Register'><div><label class='block text-sm mb-1'>Full name</label><input type='text' name='FullName' class='w-full p-3 border rounded bg-white dark:bg-gray-700'></div><div><label class='block text-sm mb-1'>Email</label><input type='email' name='Email' class='w-full p-3 border rounded bg-white dark:bg-gray-700'></div><div><label class='block text-sm mb-1'>Password</label><input type='password' name='Password' class='w-full p-3 border rounded bg-white dark:bg-gray-700'></div><div class='flex justify-end'><button class='px-4 py-2 bg-indigo-600 text-white rounded'>Create account</button></div></form><p class='mt-4 text-sm'>Already have an account? <a href='login.html' class='text-indigo-600'>Login here</a></p></div></main><footer class="text-center text-sm p-6 bg-indigo-600 text-white dark:bg-gray-800">© 2025 BlogFeed — Built by Rodrick Dick, Daniel Pasatyuk & Victor Shunevych</footer>
+<script>
+(function() {
+  function applyTheme(t) {
+    if(t === 'dark') document.documentElement.classList.add('dark');
+    else document.documentElement.classList.remove('dark');
+  }
+  const stored = localStorage.getItem('theme');
+  if(stored) applyTheme(stored);
+  else {
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(prefersDark ? 'dark' : 'light');
+  }
+  window.toggleTheme = function(btn) {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    if(btn) btn.innerText = isDark ? 'Light' : 'Dark';
+  }
+})();
+
+document.addEventListener('click', function(e){
+  const toggle = document.getElementById('avatar-toggle');
+  const menu = document.getElementById('avatar-menu');
+  if(!toggle || !menu) return;
+  if(toggle.contains(e.target)) {
+    menu.classList.toggle('hidden');
+  } else if(!menu.contains(e.target)) {
+    menu.classList.add('hidden');
+  }
+});
+</script>
+</body></html>
